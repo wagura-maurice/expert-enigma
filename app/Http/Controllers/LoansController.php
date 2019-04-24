@@ -80,8 +80,8 @@ class LoansController extends Controller
                                 'repayment_method' => 'mpesa',
                                 'voucher_code' => strtoupper(Loans::generate_string(10)),
                                 'farmer_id' => $farmer->id,
-                                'created_at' => \Carbon\Carbon::parse('2018-10-22 00:00:00')->addSeconds($i)->format('Y-m-d H:i:s'),
-                                'updated_at' => \Carbon\Carbon::parse('2019-04-22 00:00:00')->addSeconds($i)->format('Y-m-d H:i:s'),
+                                'created_at' => \Carbon\Carbon::parse(now())->addSeconds($i)->format('Y-m-d H:i:s'),
+                                'updated_at' => \Carbon\Carbon::parse(now())->addSeconds($i)->format('Y-m-d H:i:s'),
                                 'amount_paid' => $value->amount_paid,
                                 'service_charge_percentage' => 0
                             ];
