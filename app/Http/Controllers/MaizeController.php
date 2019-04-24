@@ -17,9 +17,9 @@ class MaizeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($action)
     {
-        return view('add-maize');
+        return view('add-maize', ['action' => $action]);
     }
 
     /**
@@ -52,39 +52,22 @@ class MaizeController extends Controller
                 $path = $request->file->getRealPath();
                 $data = Excel::load($path, function($reader) {
                 })->get();
-                if(!empty($data) && $data->count()){
-                    $i = 1;
-                    foreach ($data as $key => $value) {
-
-                        $farmer = Farmers::getFarmer($value->id_number);
-
-                        if (isset($farmer->id)) {
-
-                            $insert[] = [
-                                'id' => Maize::latest_maize_report()->id + $i,
-                                'acres_planted' => $value->acreage,
-                                'kg_of_seed_planted' => $value->seeds_planted_kg,
-                                'farmer_id' => $farmer->id,
-                                'created_at' => '2018-10-22 00:00:00',
-                                'updated_at' => '2019-04-22 00:00:00',
-                                'bags_harvested' => $value->bags_harvested,
-                                'report_type' => 'harvest',
-                                'season' => $value->season,
-                                'kg_of_fertilizer' => $value->fertilizer_kg,
-                                'status' => 'pending'
-                            ];
-                        }
-                        $i++;
+                if(!empty($data) && $data->count()) {
+                    
+                    if ($request->action == 'planting') {
+                        $insert = Maize::planting($data);
+                    } else if ($request->action == 'harvesting') {
+                        $insert = Maize::harvesting($data);
                     }
 
-                    echo "<pre>";
-                    print_r($insert);
-                    die();
+                    // echo "<pre>";
+                    // print_r($insert);
+                    // die();
 
                     if(!empty($insert)){
 
                         $insertData = Maize::insert($insert);
-                        
+
                         if ($insertData) {
                             Session::flash('success', 'Your Data has successfully imported');
                         }else {                        
@@ -96,7 +79,7 @@ class MaizeController extends Controller
 
                 return back();
 
-            }else {
+            } else {
                 Session::flash('error', 'File is a '.$extension.' file.!! Please upload a valid xls/csv file..!!');
                 return back();
             }
