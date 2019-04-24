@@ -187,8 +187,13 @@ Laravel Excel/CSV Import
 </a>
 <ul>
 <li>
-<a href="{{ route('maize') }}">
+<a href="{{ route('maize.report', 'planting') }}">
 <i class="fa fa-tree my-float"></i>
+</a>
+</li>
+<li>
+<a href="{{ route('maize.report', 'harvesting') }}">
+<i class="fa fa-hand-scissors-o my-float"></i>
 </a>
 </li>
 <li>
