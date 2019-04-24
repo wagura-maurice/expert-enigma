@@ -60,10 +60,6 @@ class MaizeController extends Controller
                         $insert = Maize::harvesting($data);
                     }
 
-                    // echo "<pre>";
-                    // print_r($insert);
-                    // die();
-
                     if(!empty($insert)){
 
                         $insertData = Maize::insert($insert);
