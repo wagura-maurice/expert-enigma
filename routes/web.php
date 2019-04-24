@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/test', function () {
+    dd(\App\Maize::latest_maize_report());
+})->name('test');
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -18,5 +22,5 @@ Route::get('/', function () {
 Route::get('/loans', 'LoansController@index')->name('loans');
 Route::post('/loans/store', 'LoansController@store')->name('loans.store');
 
-Route::get('/maize', 'MaizeController@index')->name('maize');
+Route::get('/maize/{action}', 'MaizeController@index')->name('maize.report');
 Route::post('/maize/store', 'MaizeController@store')->name('maize.store');
