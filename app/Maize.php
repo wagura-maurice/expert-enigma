@@ -10,7 +10,7 @@ class Maize extends Model
 
     public static function latest_maize_report()
 	{
-		return Maize::latest()->first();
+		return Self::orderByDesc('id')->first();
 	}
 
 	public static function planting($data)
@@ -18,21 +18,21 @@ class Maize extends Model
 		$i = 1;
 		foreach ($data as $key => $value) {
 
-		    $farmer = Farmers::getFarmer($value->id_number);
+		    $farmer = \App\Farmers::getFarmer($value->id_number);
 
 		    if (isset($farmer->id)) {
 
 		        $insert[] = [
-		            'id' => Maize::latest_maize_report()->id + $i,
+		            'id' => Self::latest_maize_report()->id + $i,
 		            'acres_planted' => $value->acreage,
 		            'kg_of_seed_planted' => $value->seeds_planted_kg,
 		            'farmer_id' => $farmer->id,
 		            'created_at' => \Carbon\Carbon::parse(now())->addSeconds($i)->format('Y-m-d H:i:s'),
 		            'updated_at' => \Carbon\Carbon::parse(now())->addSeconds($i)->format('Y-m-d H:i:s'),
 		            'report_type' => 'planting',
-		            'season' => $value->season,
+		            'season' => 4, //$value->season,
 		            'kg_of_fertilizer' => $value->fertilizer_kg,
-		            'status' => 'pending'
+		            'status' => 'verified'
 		        ];
 		    }
 		    $i++;
@@ -46,19 +46,19 @@ class Maize extends Model
 		$i = 1;
 		foreach ($data as $key => $value) {
 
-		    $farmer = Farmers::getFarmer($value->id_number);
+		    $farmer = \App\Farmers::getFarmer($value->id_number);
 
 		    if (isset($farmer->id)) {
 
 		        $insert[] = [
-		            'id' => Maize::latest_maize_report()->id + $i,
+		            'id' => Self::latest_maize_report()->id + $i,
 		            'farmer_id' => $farmer->id,
 		            'created_at' => \Carbon\Carbon::parse(now())->addSeconds($i)->format('Y-m-d H:i:s'),
 		            'updated_at' => \Carbon\Carbon::parse(now())->addSeconds($i)->format('Y-m-d H:i:s'),
 		            'bags_harvested' => $value->bags_harvested,
 		            'report_type' => 'harvest',
-		            'season' => $value->season,
-		            'status' => 'pending'
+		            'season' => 4, //$value->season,
+		            'status' => 'verified'
 		        ];
 		    }
 		    $i++;
