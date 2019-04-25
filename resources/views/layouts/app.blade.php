@@ -10,7 +10,7 @@
 <title>Laravel Excel Import csv and XLS file in Database</title>
 
 <!-- Styles -->
-<link rel="stylesheet" href="{{ URL::to('css/app.css') }}">
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
