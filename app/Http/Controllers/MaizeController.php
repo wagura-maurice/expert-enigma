@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Maize;
 use App\Farmers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Session;
 use Excel;
 use File;
@@ -42,7 +41,7 @@ class MaizeController extends Controller
     {
         //validate the xls file
         $this->validate($request, array(
-            'file'      => 'required'
+            'file' => 'required'
         ));
 
         if($request->hasFile('file')){
